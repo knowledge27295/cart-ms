@@ -1,0 +1,13 @@
+steps:
+# Build the container image
+# docker build -t imagename:tagname .
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/plenary-magpie-445512-c3/docker-repo/newpython:v6', '.']
+# Push the image to Google artifact registry
+# docker push us-central1-docker.pkg.dev/plenary-magpie-445512-c3/docker-repo/newpython:v6
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/plenary-magpie-445512-c3/docker-repo/newpython:v6']
+# Deploy the image to cloudrun 
+# gcloud run deploy cloud-run-deploy --image us-central1-docker.pkg.dev/plenary-magpie-445512-c3/docker-repo/newpython:v6 --region us-central1 --allow-unauthenticated
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'cloud-run-deploy', '--image', 'us-central1-docker.pkg.dev/plenary-magpie-445512-c3/docker-repo/newpython:v6', '--region', 'us-central1', '--allow-unauthenticated']
